@@ -2,8 +2,9 @@ import sqlite3
 import pandas as pd
 from pathlib import Path
 
-DB_PATH = Path("database/speqtral.db")
-DATA_PATH = Path("data/olist")
+BASE_DIR = Path(__file__).resolve().parent.parent
+DB_PATH = BASE_DIR / "database" / "speqtral.db"
+DATA_PATH = BASE_DIR / "data" / "olist"
 
 # Map: table name → CSV filename
 TABLES = {
@@ -18,6 +19,7 @@ TABLES = {
     "category_translation": "product_category_name_translation.csv",
 }
 
+
 def load_all():
     conn = sqlite3.connect(DB_PATH)
     for table_name, filename in TABLES.items():
@@ -27,6 +29,7 @@ def load_all():
         print(f"Loaded {table_name}: {len(df)} rows")
     conn.close()
     print("Done — speqtral.db created")
+
 
 if __name__ == "__main__":
     load_all()

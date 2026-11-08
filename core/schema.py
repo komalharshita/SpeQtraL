@@ -1,7 +1,9 @@
 import sqlite3
 from pathlib import Path
 
-DB_PATH = Path("database/speqtral.db")
+BASE_DIR = Path(__file__).resolve().parent.parent
+DB_PATH = BASE_DIR / "database" / "speqtral.db"
+
 
 def get_schema_string() -> str:
     conn = sqlite3.connect(DB_PATH)
