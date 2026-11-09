@@ -18,5 +18,17 @@ def get_schema_string() -> str:
         lines.append(f"Table: {table}")
         lines.append(f"  Columns: {', '.join(columns)}")
 
+    lines.extend([
+        "",
+        "Relationships:",
+        "  orders.customer_id -> customers.customer_id",
+        "  order_items.order_id -> orders.order_id",
+        "  order_items.product_id -> products.product_id",
+        "  order_items.seller_id -> sellers.seller_id",
+        "  order_reviews.order_id -> orders.order_id",
+        "  order_payments.order_id -> orders.order_id",
+        "  products.product_category_name -> category_translation.product_category_name",
+    ])
+
     conn.close()
     return "\n".join(lines)
