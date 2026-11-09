@@ -1,11 +1,10 @@
 import sqlite3
-from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-DB_PATH = BASE_DIR / "database" / "speqtral.db"
+from core.database import DB_PATH, ensure_database
 
 
 def get_schema_string() -> str:
+    ensure_database()
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")

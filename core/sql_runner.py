@@ -1,9 +1,7 @@
 import sqlite3
 import pandas as pd
-from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-DB_PATH = BASE_DIR / "database" / "speqtral.db"
+from core.database import DB_PATH, ensure_database
 
 
 def run_query(sql: str) -> tuple[pd.DataFrame | None, str | None]:
@@ -12,6 +10,7 @@ def run_query(sql: str) -> tuple[pd.DataFrame | None, str | None]:
     sql = sql.strip().removeprefix("```sql").removeprefix("```").removesuffix("```").strip()
 
     try:
+        ensure_database()
         conn = sqlite3.connect(DB_PATH)
         df = pd.read_sql_query(sql, conn)
         conn.close()
